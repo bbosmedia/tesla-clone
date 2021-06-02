@@ -35,16 +35,30 @@ display: flex;
 flex-direction: column;
 justify-content: space-between;
 align-items: center;
+
 `
 
 const ItemText = styled.div`
 padding-top: 15vh;
 text-align: center;
+h1{
+    font-size: 60px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+p{
+    font-size: 20px;
+}
 `
 
 const ButtonGroup = styled.div`
 display: flex;
 padding-bottom: 5vh;
+@media(max-width: 768px){
+    flex-direction: column;
+    padding-bottom: 2vh;
+}
 `
 
 const LeftButton = styled.div`
@@ -61,6 +75,9 @@ text-transform: uppercase;
 font-size: 12px;
 cursor: pointer;
 margin-right: 20px;
+@media(max-width: 768px){
+    margin-bottom: 10px;
+}
 `
 
 const RightButton = styled(LeftButton)`
