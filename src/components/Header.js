@@ -1,32 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import {IoMenuSharp} from 'react-icons/io5'
+import { selectCars } from '../features/carSlice'
+import { useSelector } from 'react-redux';
 
 
 
 
 function Header() {
-    const scrollTo = () =>{
-        window.scrollY(500)
-    }
+    const cars = useSelector(selectCars);
+    const [sidebar, setsidebar] = useState(false)
+    console.log(sidebar)
     return (
         <Container>
             <a href="#"><img src="images/logo.svg" alt="" /></a>
             <Menu>
-                <p><a href="#">Model S</a></p>
-                <p><a href="#">Model 3</a></p>
-                <p><a href="#">Model X</a></p>
-                <p><a href="#">Model Y</a></p>
+                {cars.map(car => (<p><a href="#">{car}</a></p>))}
                 <p><a href="#">Solar Roof</a></p>
                 <p><a href="#">Solar Panels</a></p>
             </Menu>
             <RightMenu>
                 <p><a href="#">Shop</a></p>
                 <p><a href="#">Account</a></p>
-                <p><a><IoMenuSharp onClick={scrollTo} /></a></p>
+                <p><a><IoMenuSharp onClick={() => setsidebar(true)} className="menubar" /></a></p>
             </RightMenu>
-            <BurgerNav>
-                <div>
+            <BurgerNav sidebarM={sidebar}>
+                <div className="burgerMenu" onClick={() => setsidebar(false)}>
+                    <div className="close">X</div>
                     <li><a href="#">Existing Inventory</a></li>
                     <li><a href="#">Used Inventory</a></li>
                     <li><a href="#">Trade-in</a></li>
@@ -47,6 +47,7 @@ function Header() {
 export default Header
 
 const Container = styled.div`
+z-index: 1;
 position: fixed;
 min-height: 60px;
 align-items: center;
@@ -55,6 +56,10 @@ padding: 0 20px;
 top: 0;
 left: 0;
 right: 0;
+
+.menubar{
+    cursor: pointer;
+}
 `
 
 const Menu = styled.div`
@@ -83,15 +88,27 @@ const BurgerNav = styled.div`
 position: fixed;
 top: 0;
 right: 0;
-width: 400px;
+width: 350px;
+overflow-y: scroll;
 background-color: #fff;
-height: 100vh;
+bottom: 0;
+transform: ${props => props.sidebarM ? `translateX(0)` : `translateX(100%)`};
+transition: all 0.3s ease;
 
-div{
+.burgerMenu{
     padding-top: 75px;
     padding-left: 20px;
     position: relative;
     width: 100%;
+    height: 100%;
+    .close{
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        cursor: pointer;
+    }
+
+
     li{
     list-style: none;
     padding-bottom: 20px;

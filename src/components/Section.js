@@ -5,6 +5,7 @@ import Fade from 'react-reveal/Fade';
 
 
 function Section({id, title, description, images, leftBtn, rightBtn, downarrow}) {
+
     return (
         <Wrap key={id} img={images}>
             <Fade bottom>
@@ -26,7 +27,7 @@ function Section({id, title, description, images, leftBtn, rightBtn, downarrow})
                 </RightButton></Zoom>}
                 
             </ButtonGroup>
-            {downarrow && <DownArrow src="/images/down-arrow.svg" />}
+            {downarrow && <DownArrow className="scrollButton" src="/images/down-arrow.svg" onClick={()=>{window.scrollBy(0, window.innerHeight)}} />}
             </Buttons>
         </Wrap>
     )
@@ -43,6 +44,10 @@ display: flex;
 flex-direction: column;
 justify-content: space-between;
 align-items: center;
+
+.scrollButton{
+    cursor: pointer;
+}
 
 `
 
