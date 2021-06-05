@@ -1,24 +1,32 @@
 import React from 'react'
 import styled from 'styled-components'
+import Zoom from 'react-reveal/Zoom';
+import Fade from 'react-reveal/Fade';
 
 
-function Section() {
+function Section({id, title, description, images, leftBtn, rightBtn, downarrow}) {
     return (
-        <Wrap>
+        <Wrap key={id} img={images}>
+            <Fade bottom>
             <ItemText>
-                <h1>Model S</h1>
-                <p>Order Online for Touchless Delivery</p>
+                <h1>{title}</h1>
+                {description && <p>{description}</p> }
             </ItemText>
+            </Fade>
             <Buttons>
             <ButtonGroup>
-                <LeftButton>
-                    Custom Order
+                <Zoom>
+                <LeftButton right={rightBtn}>
+                    {leftBtn}
                 </LeftButton>
-                <RightButton>
-                    Existing Inventory
-                </RightButton>
+                </Zoom>
+                
+                {rightBtn && <Zoom><RightButton>
+                    {rightBtn}
+                </RightButton></Zoom>}
+                
             </ButtonGroup>
-            <DownArrow src="/images/down-arrow.svg" />
+            {downarrow && <DownArrow src="/images/down-arrow.svg" />}
             </Buttons>
         </Wrap>
     )
@@ -27,7 +35,7 @@ function Section() {
 const Wrap = styled.div`
 width: 100%;
 height: 100vh;
-background-image: url("/images/model-s.jpg");
+background-image: ${props => `url(/images/${props.img})`};
 background-size: cover;
 background-position: center;
 background-repeat: no-repeat;
@@ -42,13 +50,15 @@ const ItemText = styled.div`
 padding-top: 15vh;
 text-align: center;
 h1{
-    font-size: 60px;
+    font-size: 32px;
+    font-weight: 500;
     color: #333;
     margin-bottom: 20px;
 }
 
 p{
-    font-size: 20px;
+    font-size: 16px;
+    color: #555;
 }
 `
 
@@ -74,7 +84,7 @@ opacity: 0.85;
 text-transform: uppercase;
 font-size: 12px;
 cursor: pointer;
-margin-right: 20px;
+margin-right: ${props => props.right ? `20px` : `0px`};
 @media(max-width: 768px){
     margin-bottom: 10px;
 }
